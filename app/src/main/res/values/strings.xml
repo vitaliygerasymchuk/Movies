@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">TheMovies</string>
+
+    <!-- Navigation -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Error msgs -->
+    <string name="error_request_exception_msg">An exception occurred while performing request.</string>
+    <string name="error_request_response_null_msg">Response\'s body was null</string>
+    <string name="error_connection_lost">No Internet connection…</string>
+    <string name="error_request_failed">Request failed</string>
+    <string name="error_not_found">Not found</string>
+    <string name="error_internal_server">Internal Server Error</string>
+    <string name="error_try_again">Try again</string>
+
+    <!-- LoginActivity -->
+    <string name="login_auth_required_title">Auth</string>
+    <string name="login_auth_required_msg">Authentication is required to continue. Please, login into you\'r TMDb account</string>
+    <string name="login_auth_ok">OK</string>
+    <string name="login_auth_cancel">Cancel</string>
+    <string name="login_user_name">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_empty_username_error">Empty Username!</string>
+    <string name="login_empty_password_error">Empty Password!</string>
+    <string name="login_btn_title_inactive">Login</string>
+    <string name="login_btn_title_active">Please, wait…</string>
+
+    <!--MainActivity-->
+    <string name="drawer_tab_account">Account</string>
+    <string name="drawer_tab_settings">Settings</string>
+
+
+</resources>
