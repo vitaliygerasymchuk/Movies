@@ -1,5 +1,5 @@
 # Movies
-<h4>Sample application which is based on a The Movie DB backend.</h4>
+<h4>Sample application which is based on The Movie DB backend.</h4>
 
 Technology stack used here:
 1. Retrofit
