@@ -13,8 +13,8 @@ import gerasymchuk.v.themovies.data.model.Movie;
 
 import static gerasymchuk.v.themovies.shared.Const.DB_VERSION;
 
-@Database(entities = {Certification.class, Movie.class}, version = DB_VERSION)
-@TypeConverters({Converters.class})
+@Database(entities = {Certification.class, Movie.class}, version = DB_VERSION, exportSchema = false)
+@TypeConverters(Converters.class)
 public abstract class RoomDB extends RoomDatabase {
     @NonNull
     public abstract MovieCertificationsDao certificationsDao();
