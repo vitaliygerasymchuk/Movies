@@ -2,6 +2,7 @@ package gerasymchuk.v.themovies.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -10,6 +11,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import gerasymchuk.v.themovies.data.Converters;
 
 import static gerasymchuk.v.themovies.shared.Const.TABLE_MOVIES;
 import static gerasymchuk.v.themovies.shared.Validator.validString;
@@ -71,7 +74,7 @@ public class Movie {
 
     @SerializedName("genre_ids")
     @NonNull
-    public List<Integer> genreIds = new ArrayList<>();
+    public ArrayList<Integer> genreIds = new ArrayList<>();
 
     @NonNull
     public String getTitle() {
@@ -106,6 +109,34 @@ public class Movie {
     @NonNull
     public String getReleaseDate() {
         return validString(releaseDate);
+    }
+
+    public void setTitle(@Nullable String title) {
+        this.title = title;
+    }
+
+    public void setPosterPath(@Nullable String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public void setOriginalLanguage(@Nullable String originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    public void setOriginalTitle(@Nullable String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public void setBackdropPath(@Nullable String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public void setReleaseDate(@Nullable String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     @Override

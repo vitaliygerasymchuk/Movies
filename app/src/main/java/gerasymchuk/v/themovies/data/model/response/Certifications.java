@@ -8,7 +8,7 @@ import java.util.List;
 import gerasymchuk.v.themovies.data.model.Certification;
 
 /**
- * Created by vitaliygerasymchuk on 11/18/17.
+ * Created by vitaliygerasymchuk on 11/18/17
  */
 
 public class Certifications {

@@ -67,6 +67,7 @@ public class GetNowPlayingMoviesInteractor
                 notifySuccess(responseBody);
             } else {
                 handleErrorResponse(response);
+                logE("getMovies :: MoviesResponse is null ");
             }
 
         } catch (Exception e) {

@@ -9,7 +9,7 @@ import java.util.List;
 import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.view.BasePresenter;
 import gerasymchuk.v.themovies.view.tab.AbsMoviesFragment;
-import gerasymchuk.v.themovies.view.tab.now_playing.presenter.UpcomingMoviesPresenter;
+import gerasymchuk.v.themovies.view.tab.now_playing.presenter.NowPlayingMoviesPresenter;
 
 /**
  * Created by vitaliygerasymchuk on 1/12/18
@@ -37,7 +37,7 @@ public class NowPlayingMoviesFragment
 
     @Override
     protected BasePresenter bindPresenter() {
-        presenter = new UpcomingMoviesPresenter(this);
+        presenter = new NowPlayingMoviesPresenter(this);
         return presenter;
     }
 

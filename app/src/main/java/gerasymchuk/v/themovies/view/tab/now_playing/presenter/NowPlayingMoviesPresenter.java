@@ -14,7 +14,7 @@ import gerasymchuk.v.themovies.view.tab.now_playing.MoviesContract;
  * Created by vitaliygerasymchuk on 1/12/18
  */
 
-public class UpcomingMoviesPresenter implements MoviesContract.Presenter {
+public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
 
     @Nullable
     private MoviesContract.View view;
@@ -22,7 +22,7 @@ public class UpcomingMoviesPresenter implements MoviesContract.Presenter {
     @NonNull
     private GetNowPlayingMoviesUseCase nowPlayingMoviesUseCase;
 
-    public UpcomingMoviesPresenter(@NonNull MoviesContract.View view) {
+    public NowPlayingMoviesPresenter(@NonNull MoviesContract.View view) {
         this.view = view;
         this.initNowPlayingMoviesUseCase();
     }
