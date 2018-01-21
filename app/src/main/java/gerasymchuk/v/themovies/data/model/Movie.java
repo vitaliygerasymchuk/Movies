@@ -2,8 +2,6 @@ package gerasymchuk.v.themovies.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
-import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -11,9 +9,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import gerasymchuk.v.themovies.data.Converters;
 
 import static gerasymchuk.v.themovies.shared.Const.TABLE_MOVIES;
 import static gerasymchuk.v.themovies.shared.Validator.validString;
