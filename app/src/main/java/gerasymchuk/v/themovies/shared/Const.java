@@ -19,7 +19,4 @@ public class Const {
     public static final String DEFAULT_REGION = "US";
 
     public static final int DEFAULT_PAGE = 1;
-
-    public static final String DEF_USERNAME = "vitaliy.herasymchuk";
-    public static final String DEF_PASSWORD = "d1e1d1992";
 }
