@@ -15,15 +15,28 @@ import java.util.ArrayList;
 
 public class Converters {
 
+    /**
+     * Converts {@link ArrayList<Integer>} to String in order to persist in {@link android.arch.persistence.room.Room}
+     *
+     * @param list ArrayList
+     * @return String
+     */
     @TypeConverter
-    public static String fromIntArrayList(@NonNull ArrayList<Integer> list) {
+    public static String intArrayListToString(@NonNull ArrayList<Integer> list) {
         Gson gson = new Gson();
         return gson.toJson(list);
     }
 
+
+    /**
+     * Converts {@link String} to ArrayList<Integer></>
+     *
+     * @param value String
+     * @return ArrayList
+     */
     @TypeConverter
-    public static ArrayList<String> toIntArrayList(String value) {
-        Type listType = new TypeToken<ArrayList<String>>() {
+    public static ArrayList<Integer> stringToIntArrayList(@NonNull String value) {
+        Type listType = new TypeToken<ArrayList<Integer>>() {
         }.getType();
         return new Gson().fromJson(value, listType);
     }
