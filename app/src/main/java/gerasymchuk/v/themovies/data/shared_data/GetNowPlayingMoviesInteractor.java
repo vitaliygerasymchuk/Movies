@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import gerasymchuk.v.themovies.App;
-import gerasymchuk.v.themovies.data.model.response.MoviesResponse;
+import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
 import gerasymchuk.v.themovies.network.AbsInteractor;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
@@ -21,11 +21,11 @@ import static gerasymchuk.v.themovies.shared.Const.DEFAULT_REGION;
  */
 
 public class GetNowPlayingMoviesInteractor
-        extends AbsInteractor<MoviesResponse>
+        extends AbsInteractor<NowPlayingMoviesResponse>
         implements GetNowPlayingMoviesUseCase {
 
     @SuppressWarnings("unused")
-    private static final String TAG = GetNowPlayingMoviesInteractor.class.getSimpleName();
+    private static final String TAG = "GetNowPlayingMoviesInteractor";
 
     @Nullable
     private String language;
@@ -35,7 +35,7 @@ public class GetNowPlayingMoviesInteractor
 
     private int page = -1;
 
-    public GetNowPlayingMoviesInteractor(@Nullable OnSuccess<MoviesResponse> onSuccess,
+    public GetNowPlayingMoviesInteractor(@Nullable OnSuccess<NowPlayingMoviesResponse> onSuccess,
                                          @Nullable OnError<String> errorString,
                                          @Nullable OnError<Integer> errorInt) {
         super(onSuccess, errorString, errorInt);
@@ -56,18 +56,23 @@ public class GetNowPlayingMoviesInteractor
 
     private void getMovies() {
         try {
-            final Response<MoviesResponse> response = App.getInstance()
+            log("getMovies :: start");
+            final Response<NowPlayingMoviesResponse> response = App.getInstance()
                     .getApi()
                     .getNowPlayingMovies(getLanguage(), getPage(), getRegion())
                     .execute();
 
-            final MoviesResponse responseBody = response.body();
+            log("getMovies :: received response %s", +response.code());
+
+            final NowPlayingMoviesResponse responseBody = response.body();
 
             if (responseBody != null) {
+                App.getInstance().getDB().upcomingMoviesDao().insertMovies(responseBody.movies);
                 notifySuccess(responseBody);
+                log("getMovies :: in db size, %s ", App.getInstance().getDB().upcomingMoviesDao().getMovies().size());
             } else {
                 handleErrorResponse(response);
-                logE("getMovies :: MoviesResponse is null ");
+                logE("getMovies :: NowPlayingMoviesResponse is null ");
             }
 
         } catch (Exception e) {
