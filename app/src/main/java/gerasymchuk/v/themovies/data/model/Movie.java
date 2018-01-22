@@ -1,7 +1,7 @@
 package gerasymchuk.v.themovies.data.model;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Index;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import gerasymchuk.v.themovies.enums.MovieType;
+
 import static gerasymchuk.v.themovies.shared.Const.TABLE_MOVIES;
 import static gerasymchuk.v.themovies.shared.Validator.validString;
 
@@ -17,14 +19,18 @@ import static gerasymchuk.v.themovies.shared.Validator.validString;
  * Created by vitaliygerasymchuk on 1/12/18
  */
 
-@Entity(tableName = TABLE_MOVIES)
+@Entity(tableName = TABLE_MOVIES,
+        indices = {@Index(value = {"id", "type"})},
+        primaryKeys = {"id", "type"})
 public class Movie {
+
+    @NonNull
+    public String type = MovieType.Na.name();
 
     @SerializedName("vote_count")
     public int voteCount;
 
     @SerializedName("id")
-    @PrimaryKey
     public int id;
 
     @SerializedName("video")
@@ -135,6 +141,15 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    @NonNull
+    public MovieType getType() {
+        return MovieType.valueOf(type);
+    }
+
+    public void setType(@NonNull MovieType type) {
+        this.type = type.name();
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -152,6 +167,7 @@ public class Movie {
                 ", overview='" + overview + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", genreIds=" + genreIds +
+                ", type=" + getType() +
                 '}';
     }
 }
