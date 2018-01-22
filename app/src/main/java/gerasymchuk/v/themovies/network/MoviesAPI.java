@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import gerasymchuk.v.themovies.BuildConfig;
 import gerasymchuk.v.themovies.data.model.response.CertificationsResponse;
-import gerasymchuk.v.themovies.data.model.response.MoviesResponse;
+import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
 import gerasymchuk.v.themovies.view.login.data.model.RequestTokenResponse;
 import gerasymchuk.v.themovies.data.model.response.SessionResponse;
 import gerasymchuk.v.themovies.view.login.data.model.LoginResponse;
@@ -35,5 +35,5 @@ public interface MoviesAPI {
     Call<CertificationsResponse> getMoviesCertifications();
 
     @GET("movie/now_playing?api_key=" + BuildConfig.API_KEY)
-    Call<MoviesResponse> getNowPlayingMovies(@Query(LANGUAGE) @Nullable String language, @Query(PAGE) int page, @Query(REGION) @Nullable String region);
+    Call<NowPlayingMoviesResponse> getNowPlayingMovies(@Query(LANGUAGE) @Nullable String language, @Query(PAGE) int page, @Query(REGION) @Nullable String region);
 }

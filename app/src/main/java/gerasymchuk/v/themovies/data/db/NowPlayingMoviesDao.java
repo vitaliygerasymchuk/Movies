@@ -22,6 +22,9 @@ public interface NowPlayingMoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovies(@NonNull Movie... movies);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertMovies(@NonNull List<Movie> movies);
+
     @Query("SELECT * FROM " + TABLE_MOVIES)
     List<Movie> getMovies();
 }
