@@ -9,7 +9,9 @@ import org.joda.time.DateTime;
 
 import gerasymchuk.v.themovies.BuildConfig;
 import gerasymchuk.v.themovies.data.deserializer.CertificationsDeserializer;
+import gerasymchuk.v.themovies.data.deserializer.NowPlayingMoviesDeserializer;
 import gerasymchuk.v.themovies.data.model.response.Certifications;
+import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
 import gerasymchuk.v.themovies.shared.DateSerializer;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -74,6 +76,7 @@ public class RetrofitManager {
         return new GsonBuilder()
                 .registerTypeAdapter(DateTime.class, new DateSerializer())
                 .registerTypeAdapter(Certifications.class, new CertificationsDeserializer())
+                .registerTypeAdapter(NowPlayingMoviesResponse.class, new NowPlayingMoviesDeserializer())
                 .create();
     }
 }
