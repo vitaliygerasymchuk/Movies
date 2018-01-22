@@ -42,7 +42,13 @@ public class Logger {
 
     public static void d(@NonNull String tag, String text, Object... args) {
         if (DEBUG) {
-            Log.d(tag, "[ " + Thread.currentThread().getId() + " ]" + String.format(text, args));
+            Log.d(tag, "[ " + Thread.currentThread().getId() + " ] " + String.format(text, args));
+        }
+    }
+
+    public static void i(@NonNull String tag, String text, Object... args) {
+        if (DEBUG) {
+            Log.i(tag, "[ " + Thread.currentThread().getId() + " ] " + String.format(text, args));
         }
     }
 }

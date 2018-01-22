@@ -9,6 +9,7 @@ import java.util.List;
 
 import gerasymchuk.v.themovies.R;
 import gerasymchuk.v.themovies.data.model.Movie;
+import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.view.AbsFragment;
 
 /**
@@ -17,26 +18,25 @@ import gerasymchuk.v.themovies.view.AbsFragment;
 
 public abstract class AbsMoviesFragment extends AbsFragment {
 
-    @NonNull
-    private RecyclerView recyclerView;
+    @SuppressWarnings("unused")
+    private static final boolean DEBUG = true;
+
+    @SuppressWarnings("unused")
+    private static final String TAG = "AbsMoviesFragment";
 
     @Nullable
     private MoviesListAdapter adapter;
 
     @Override
     protected int onRequestLayout() {
+        log("onRequestLayout");
         return R.layout.fragment_movies_list;
     }
 
     @Override
     protected void onFragmentReady() {
+        log("onFragmentReady");
         setupRecyclerView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
     }
 
     protected abstract void onFragmentVisible();
@@ -55,12 +55,14 @@ public abstract class AbsMoviesFragment extends AbsFragment {
      * Setups {@link RecyclerView} and {@link MoviesListAdapter}
      */
     private void setupRecyclerView() {
+        log("setupRecyclerView :: start");
         if (getContext() != null) {
-            recyclerView = find(R.id.recycler_view);
+            RecyclerView recyclerView = find(R.id.recycler_view);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             adapter = new MoviesListAdapter();
             recyclerView.setAdapter(adapter);
-        }
+            log("setupRecyclerView :: done");
+        } else log("setupRecyclerView :: context null");
     }
 
     /**
@@ -69,8 +71,16 @@ public abstract class AbsMoviesFragment extends AbsFragment {
      * @param movieList List of {@link Movie}
      */
     protected void refreshRecyclerView(@NonNull List<Movie> movieList) {
+        log("refreshRecyclerView :: start");
         if (adapter != null) {
             adapter.refresh(movieList);
+            log("refreshRecyclerView :: done");
+        } else log("refreshRecyclerView :: adapter null");
+    }
+
+    private void log(String msg, Object... args) {
+        if (DEBUG) {
+            Logger.d(TAG, msg, args);
         }
     }
 }

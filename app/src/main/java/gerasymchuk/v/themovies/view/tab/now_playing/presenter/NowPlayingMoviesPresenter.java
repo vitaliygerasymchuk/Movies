@@ -3,9 +3,10 @@ package gerasymchuk.v.themovies.view.tab.now_playing.presenter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import gerasymchuk.v.themovies.data.model.response.MoviesResponse;
+import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
 import gerasymchuk.v.themovies.data.shared_data.GetNowPlayingMoviesInteractor;
 import gerasymchuk.v.themovies.data.shared_data.GetNowPlayingMoviesUseCase;
+import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
 import gerasymchuk.v.themovies.shared.callback.OnSuccess;
 import gerasymchuk.v.themovies.view.tab.now_playing.MoviesContract;
@@ -16,39 +17,47 @@ import gerasymchuk.v.themovies.view.tab.now_playing.MoviesContract;
 
 public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
 
+    @SuppressWarnings("unused")
+    private static final String TAG = "NowPlayingMoviesPresenter";
+
+    private static final boolean DEBUG = true;
+
     @Nullable
     private MoviesContract.View view;
 
-    @NonNull
+    @Nullable
     private GetNowPlayingMoviesUseCase nowPlayingMoviesUseCase;
 
     public NowPlayingMoviesPresenter(@NonNull MoviesContract.View view) {
         this.view = view;
         this.initNowPlayingMoviesUseCase();
+        log("constructor");
     }
 
     @Override
     public void onDestroy() {
         this.view = null;
+        log("onDestroy");
     }
 
     @Override
     public void onResume() {
-
+        log("onResume");
+        if (nowPlayingMoviesUseCase != null) {
+            nowPlayingMoviesUseCase.getNowPlayingMovies(null, null, -1);
+        }
     }
 
     @Override
     public void onVisibilityChanged(boolean isVisible) {
         if (view == null) return;
-        if (isVisible) {
-
-        }
+        log("onVisibilityChanged %s ", String.valueOf(isVisible));
     }
 
     private void initNowPlayingMoviesUseCase() {
-        nowPlayingMoviesUseCase = new GetNowPlayingMoviesInteractor(new OnSuccess<MoviesResponse>() {
+        nowPlayingMoviesUseCase = new GetNowPlayingMoviesInteractor(new OnSuccess<NowPlayingMoviesResponse>() {
             @Override
-            public void onSuccess(@NonNull MoviesResponse moviesResponse) {
+            public void onSuccess(@NonNull NowPlayingMoviesResponse nowPlayingMoviesResponse) {
 
             }
         }, new OnError<String>() {
@@ -62,5 +71,11 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
 
             }
         });
+    }
+
+    private void log(@NonNull String msg, Object... args) {
+        if (DEBUG) {
+            Logger.d(TAG, "[MOVIES_NOW_PLAYING] " + msg, args);
+        }
     }
 }
