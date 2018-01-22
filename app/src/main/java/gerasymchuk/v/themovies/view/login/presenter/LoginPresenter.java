@@ -6,18 +6,11 @@ import android.support.annotation.Nullable;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import java.util.List;
-
 import gerasymchuk.v.themovies.App;
 import gerasymchuk.v.themovies.R;
-import gerasymchuk.v.themovies.data.model.Movie;
-import gerasymchuk.v.themovies.data.model.response.MoviesResponse;
-import gerasymchuk.v.themovies.data.shared_data.GetNowPlayingMoviesInteractor;
 import gerasymchuk.v.themovies.view.login.data.model.RequestTokenResponse;
-import gerasymchuk.v.themovies.data.model.response.SessionResponse;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
-import gerasymchuk.v.themovies.shared.callback.OnSuccess;
 import gerasymchuk.v.themovies.view.login.LoginContract;
 import gerasymchuk.v.themovies.view.login.data.CreateSessionTokenUseCase;
 import gerasymchuk.v.themovies.view.login.data.GetRequestTokenUseCase;
@@ -137,6 +130,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         if (isInputValid(userName, password)) {
             doWithNetwork(this::generateRequestToken);
+        } else {
+            view.hideLoginProgress();
         }
     }
 
