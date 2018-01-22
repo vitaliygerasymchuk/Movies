@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import gerasymchuk.v.themovies.R;
+import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.view.AbsActivity;
 import gerasymchuk.v.themovies.view.BasePresenter;
 import gerasymchuk.v.themovies.view.account.AccountActivity;
@@ -149,7 +150,7 @@ public class MainActivity
     private void setupViewPager() {
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager = find(R.id.view_pager);
-        viewPager.setAdapter(pagerAdapter);
         pagerAdapter.addFragments(NowPlayingMoviesFragment.newInstance());
+        viewPager.setAdapter(pagerAdapter);
     }
 }
