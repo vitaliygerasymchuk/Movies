@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -37,6 +38,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Stetho.initializeWithDefaults(this);
         JodaTimeAndroid.init(this);
         Logger.addLogAdapter(new AndroidLogAdapter());
         INSTANCE = this;
