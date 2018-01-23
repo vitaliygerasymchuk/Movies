@@ -1,5 +1,6 @@
 package gerasymchuk.v.themovies.data.db;
 
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -25,6 +26,6 @@ public interface MoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovies(@NonNull List<Movie> movies);
 
-    @Query("SELECT * FROM " + TABLE_MOVIES + " WHERE type like :type")
-    List<Movie> getMoviesForType(@NonNull String type);
+    @Query("SELECT * FROM " + TABLE_MOVIES + " WHERE type like :type ORDER BY voteCount ASC")
+    DataSource.Factory<Integer, Movie> getMoviesForType(@NonNull String type);
 }

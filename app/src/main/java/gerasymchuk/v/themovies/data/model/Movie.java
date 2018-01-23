@@ -157,14 +157,50 @@ public class Movie {
 
         Movie movie = (Movie) o;
 
+        if (voteCount != movie.voteCount) return false;
         if (id != movie.id) return false;
-        return type.equals(movie.type);
+        if (video != movie.video) return false;
+        if (adult != movie.adult) return false;
+        if (Double.compare(movie.voteAverage, voteAverage) != 0) return false;
+        if (Double.compare(movie.popularity, popularity) != 0) return false;
+        if (!type.equals(movie.type)) return false;
+        if (title != null ? !title.equals(movie.title) : movie.title != null) return false;
+        if (posterPath != null ? !posterPath.equals(movie.posterPath) : movie.posterPath != null)
+            return false;
+        if (originalLanguage != null ? !originalLanguage.equals(movie.originalLanguage) : movie.originalLanguage != null)
+            return false;
+        if (originalTitle != null ? !originalTitle.equals(movie.originalTitle) : movie.originalTitle != null)
+            return false;
+        if (backdropPath != null ? !backdropPath.equals(movie.backdropPath) : movie.backdropPath != null)
+            return false;
+        if (overview != null ? !overview.equals(movie.overview) : movie.overview != null)
+            return false;
+        if (releaseDate != null ? !releaseDate.equals(movie.releaseDate) : movie.releaseDate != null)
+            return false;
+        return genreIds.equals(movie.genreIds);
     }
 
     @Override
     public int hashCode() {
-        int result = type.hashCode();
+        int result;
+        long temp;
+        result = type.hashCode();
+        result = 31 * result + voteCount;
         result = 31 * result + id;
+        result = 31 * result + (video ? 1 : 0);
+        result = 31 * result + (adult ? 1 : 0);
+        temp = Double.doubleToLongBits(voteAverage);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(popularity);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (posterPath != null ? posterPath.hashCode() : 0);
+        result = 31 * result + (originalLanguage != null ? originalLanguage.hashCode() : 0);
+        result = 31 * result + (originalTitle != null ? originalTitle.hashCode() : 0);
+        result = 31 * result + (backdropPath != null ? backdropPath.hashCode() : 0);
+        result = 31 * result + (overview != null ? overview.hashCode() : 0);
+        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
+        result = 31 * result + genreIds.hashCode();
         return result;
     }
 

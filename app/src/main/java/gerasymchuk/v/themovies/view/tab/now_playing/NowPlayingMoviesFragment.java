@@ -1,16 +1,17 @@
 package gerasymchuk.v.themovies.view.tab.now_playing;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import java.util.List;
 
 import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.view.BasePresenter;
 import gerasymchuk.v.themovies.view.tab.AbsMoviesFragment;
 import gerasymchuk.v.themovies.view.tab.now_playing.presenter.NowPlayingMoviesPresenter;
+import gerasymchuk.v.themovies.view_model.MoviesViewModel;
 
 /**
  * Created by vitaliygerasymchuk on 1/12/18
@@ -41,6 +42,7 @@ public class NowPlayingMoviesFragment
     protected void onFragmentReady() {
         super.onFragmentReady();
         log("onFragmentReady");
+        initViewModel();
     }
 
     @Override
@@ -67,14 +69,31 @@ public class NowPlayingMoviesFragment
     }
 
     @Override
-    public void renderMovies(@NonNull List<Movie> movieList) {
+    public void renderMovies(@NonNull PagedList<Movie> movieList) {
         log("renderMovies");
         refreshRecyclerView(movieList);
     }
 
+    private void initViewModel() {
+        log("initViewModel :: start");
+        final MoviesViewModel viewModel = ViewModelProviders.of(this)
+                .get(MoviesViewModel.class);
+        observeMovies(viewModel);
+        log("initViewModel :: done");
+    }
+
+    private void observeMovies(@NonNull MoviesViewModel viewModel) {
+        viewModel.moviesList.observe(this, movies -> {
+            log("observeMovies :: received result. Start checking");
+            if (presenter != null) {
+                presenter.checkMovies(movies);
+            } else log("observeMovies :: couldn't check, presenter == null");
+        });
+    }
+
     private void log(String msg, Object... args) {
         if (DEBUG) {
-            Logger.d(TAG, msg, args);
+            Logger.d(TAG, "[MOVIES_NOW_PLAYING] " + msg, args);
         }
     }
 }

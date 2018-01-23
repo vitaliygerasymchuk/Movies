@@ -37,7 +37,6 @@ public class ViewPagerAdapter extends AbsPagerAdapter {
 
     @Override
     public int getCount() {
-        log("getCount :: %s ", String.valueOf(fragments.size()));
         return fragments.size();
     }
 

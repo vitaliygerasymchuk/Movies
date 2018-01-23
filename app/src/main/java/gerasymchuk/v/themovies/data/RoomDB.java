@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 
 import gerasymchuk.v.themovies.data.db.MovieCertificationsDao;
-import gerasymchuk.v.themovies.data.db.NowPlayingMoviesDao;
+import gerasymchuk.v.themovies.data.db.MoviesDao;
 import gerasymchuk.v.themovies.data.model.Certification;
 import gerasymchuk.v.themovies.data.model.Movie;
 
@@ -20,5 +20,5 @@ public abstract class RoomDB extends RoomDatabase {
     public abstract MovieCertificationsDao certificationsDao();
 
     @NonNull
-    public abstract NowPlayingMoviesDao upcomingMoviesDao();
+    public abstract MoviesDao moviesDao();
 }

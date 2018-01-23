@@ -1,8 +1,10 @@
 package gerasymchuk.v.themovies.view.tab.now_playing.presenter;
 
+import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
 import gerasymchuk.v.themovies.view.tab.now_playing.MoviesContract;
@@ -45,13 +47,22 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
     @Override
     public void onResume() {
         log("onResume");
-        getMoreMovies();
+//        getMoreMovies();
     }
 
     @Override
     public void onVisibilityChanged(boolean isVisible) {
         if (view == null) return;
         log("onVisibilityChanged %s ", String.valueOf(isVisible));
+    }
+
+    @Override
+    public void checkMovies(@Nullable PagedList<Movie> movies) {
+        if (movies != null) {
+            log("checkMovies :: list is ok, size %s ", movies.getLastKey());
+            if (view == null) return;
+            view.renderMovies(movies);
+        } else log("checkMovies :: PagedList of movies is null");
     }
 
     @Override
@@ -69,12 +80,13 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
     private void initNowPlayingMoviesUseCase() {
         nowPlayingMoviesUseCase = new GetNowPlayingMoviesInteractor(nowPlayingMoviesResponse -> {
             if (view == null) return;
-            view.renderMovies(nowPlayingMoviesResponse.movies);
             totalPages = nowPlayingMoviesResponse.totalPages;
+
             if (currentPage != totalPages) {
                 currentPage++;
                 log("getMoreMovies :: done, nextPage %s ", currentPage);
             } else log("getMoreMovies :: done, all pages downloaded");
+
         }, new OnError<String>() {
             @Override
             public void onError(String s) {

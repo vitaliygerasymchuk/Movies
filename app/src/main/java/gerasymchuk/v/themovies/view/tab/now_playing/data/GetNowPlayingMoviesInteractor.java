@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import gerasymchuk.v.themovies.App;
 import gerasymchuk.v.themovies.data.RoomDB;
 import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
+import gerasymchuk.v.themovies.enums.MovieType;
 import gerasymchuk.v.themovies.network.AbsInteractor;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
@@ -61,27 +62,25 @@ public class GetNowPlayingMoviesInteractor
 
     private void getMovies() {
         try {
-            log("getMovies :: start");
+            log("getMoviesForType :: start");
             final Response<NowPlayingMoviesResponse> response = App.getInstance()
                     .getApi()
                     .getNowPlayingMovies(getLanguage(), getPage(), getRegion())
                     .execute();
 
-            log("getMovies :: received response %s", +response.code());
+            log("getMoviesForType :: received response %s", +response.code());
 
             final NowPlayingMoviesResponse responseBody = response.body();
 
             if (responseBody != null) {
-                db.upcomingMoviesDao().insertMovies(responseBody.movies);
+                db.moviesDao().insertMovies(responseBody.movies);
                 notifySuccess(responseBody);
-                log("getMovies :: in db size, %s ", db.upcomingMoviesDao().getMovies().size());
             } else {
                 handleErrorResponse(response);
-                logE("getMovies :: NowPlayingMoviesResponse is null ");
+                logE("getMoviesForType :: NowPlayingMoviesResponse is null ");
             }
-
         } catch (Exception e) {
-            logE("getMovies :: exception " + e.toString());
+            logE("getMoviesForType :: exception " + e.toString());
             notifyError(EXCEPTION_MSG);
         }
     }
