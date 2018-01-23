@@ -17,7 +17,7 @@ import static gerasymchuk.v.themovies.shared.Const.TABLE_MOVIES;
  */
 
 @Dao
-public interface NowPlayingMoviesDao {
+public interface MoviesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovies(@NonNull Movie... movies);
@@ -25,6 +25,6 @@ public interface NowPlayingMoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovies(@NonNull List<Movie> movies);
 
-    @Query("SELECT * FROM " + TABLE_MOVIES)
-    List<Movie> getMovies();
+    @Query("SELECT * FROM " + TABLE_MOVIES + " WHERE type like :type")
+    List<Movie> getMoviesForType(@NonNull String type);
 }
