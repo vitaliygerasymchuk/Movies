@@ -3,13 +3,11 @@ package gerasymchuk.v.themovies.view.tab.now_playing.presenter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
-import gerasymchuk.v.themovies.view.tab.now_playing.data.GetNowPlayingMoviesInteractor;
-import gerasymchuk.v.themovies.view.tab.now_playing.data.GetNowPlayingMoviesUseCase;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
-import gerasymchuk.v.themovies.shared.callback.OnSuccess;
 import gerasymchuk.v.themovies.view.tab.now_playing.MoviesContract;
+import gerasymchuk.v.themovies.view.tab.now_playing.data.GetNowPlayingMoviesInteractor;
+import gerasymchuk.v.themovies.view.tab.now_playing.data.GetNowPlayingMoviesUseCase;
 
 /**
  * Created by vitaliygerasymchuk on 1/12/18
@@ -28,6 +26,10 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
     @Nullable
     private GetNowPlayingMoviesUseCase nowPlayingMoviesUseCase;
 
+    private int currentPage = 1;
+
+    private int totalPages = -1;
+
     public NowPlayingMoviesPresenter(@NonNull MoviesContract.View view) {
         this.view = view;
         this.initNowPlayingMoviesUseCase();
@@ -43,9 +45,7 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
     @Override
     public void onResume() {
         log("onResume");
-        if (nowPlayingMoviesUseCase != null) {
-            nowPlayingMoviesUseCase.getNowPlayingMovies(null, null, -1);
-        }
+        getMoreMovies();
     }
 
     @Override
@@ -54,12 +54,27 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
         log("onVisibilityChanged %s ", String.valueOf(isVisible));
     }
 
-    private void initNowPlayingMoviesUseCase() {
-        nowPlayingMoviesUseCase = new GetNowPlayingMoviesInteractor(new OnSuccess<NowPlayingMoviesResponse>() {
-            @Override
-            public void onSuccess(@NonNull NowPlayingMoviesResponse nowPlayingMoviesResponse) {
+    @Override
+    public void getMoreMovies() {
+        if (currentPage != totalPages) {
+            if (nowPlayingMoviesUseCase != null) {
+                log("getMoreMovies :: start, currentPage %s ", currentPage);
+                nowPlayingMoviesUseCase.getNowPlayingMovies(null, null, currentPage);
+            } else log("getMoreMovies :: GetNowPlayingMoviesUseCase is null");
+        } else {
+            log("getMoreMovies :: no need to download, last page is %s ", currentPage);
+        }
+    }
 
-            }
+    private void initNowPlayingMoviesUseCase() {
+        nowPlayingMoviesUseCase = new GetNowPlayingMoviesInteractor(nowPlayingMoviesResponse -> {
+            if (view == null) return;
+            view.renderMovies(nowPlayingMoviesResponse.movies);
+            totalPages = nowPlayingMoviesResponse.totalPages;
+            if (currentPage != totalPages) {
+                currentPage++;
+                log("getMoreMovies :: done, nextPage %s ", currentPage);
+            } else log("getMoreMovies :: done, all pages downloaded");
         }, new OnError<String>() {
             @Override
             public void onError(String s) {

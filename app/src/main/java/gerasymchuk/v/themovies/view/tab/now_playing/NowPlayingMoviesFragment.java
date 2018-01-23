@@ -67,8 +67,8 @@ public class NowPlayingMoviesFragment
     }
 
     @Override
-    public void showMovies(@NonNull List<Movie> movieList) {
-        log("showMovies");
+    public void renderMovies(@NonNull List<Movie> movieList) {
+        log("renderMovies");
         refreshRecyclerView(movieList);
     }
 
