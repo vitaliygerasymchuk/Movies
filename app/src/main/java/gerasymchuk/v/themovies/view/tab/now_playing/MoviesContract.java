@@ -4,8 +4,6 @@ import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.List;
-
 import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.view.BasePresenter;
 
