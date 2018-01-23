@@ -73,8 +73,8 @@ public class NowPlayingMoviesFragment
     }
 
     private void log(String msg, Object... args) {
-        if (DEBUG){
-            Logger.d(TAG,msg,args);
+        if (DEBUG) {
+            Logger.d(TAG, msg, args);
         }
     }
 }

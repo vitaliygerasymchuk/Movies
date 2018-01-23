@@ -1,4 +1,4 @@
-package gerasymchuk.v.themovies.data.shared_data;
+package gerasymchuk.v.themovies.view.tab.now_playing.data;
 
 import android.support.annotation.Nullable;
 

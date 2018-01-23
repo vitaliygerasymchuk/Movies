@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
-import gerasymchuk.v.themovies.data.shared_data.GetNowPlayingMoviesInteractor;
-import gerasymchuk.v.themovies.data.shared_data.GetNowPlayingMoviesUseCase;
+import gerasymchuk.v.themovies.view.tab.now_playing.data.GetNowPlayingMoviesInteractor;
+import gerasymchuk.v.themovies.view.tab.now_playing.data.GetNowPlayingMoviesUseCase;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
 import gerasymchuk.v.themovies.shared.callback.OnSuccess;

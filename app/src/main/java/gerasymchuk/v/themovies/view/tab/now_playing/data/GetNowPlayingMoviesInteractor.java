@@ -1,9 +1,10 @@
-package gerasymchuk.v.themovies.data.shared_data;
+package gerasymchuk.v.themovies.view.tab.now_playing.data;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import gerasymchuk.v.themovies.App;
+import gerasymchuk.v.themovies.data.RoomDB;
 import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
 import gerasymchuk.v.themovies.network.AbsInteractor;
 import gerasymchuk.v.themovies.shared.Logger;
@@ -27,6 +28,9 @@ public class GetNowPlayingMoviesInteractor
     @SuppressWarnings("unused")
     private static final String TAG = "GetNowPlayingMoviesInteractor";
 
+    @NonNull
+    private RoomDB db;
+
     @Nullable
     private String language;
 
@@ -39,6 +43,7 @@ public class GetNowPlayingMoviesInteractor
                                          @Nullable OnError<String> errorString,
                                          @Nullable OnError<Integer> errorInt) {
         super(onSuccess, errorString, errorInt);
+        db = App.getInstance().getDB();
     }
 
     @Override
@@ -67,9 +72,9 @@ public class GetNowPlayingMoviesInteractor
             final NowPlayingMoviesResponse responseBody = response.body();
 
             if (responseBody != null) {
-                App.getInstance().getDB().upcomingMoviesDao().insertMovies(responseBody.movies);
+                db.upcomingMoviesDao().insertMovies(responseBody.movies);
                 notifySuccess(responseBody);
-                log("getMovies :: in db size, %s ", App.getInstance().getDB().upcomingMoviesDao().getMovies().size());
+                log("getMovies :: in db size, %s ", db.upcomingMoviesDao().getMovies().size());
             } else {
                 handleErrorResponse(response);
                 logE("getMovies :: NowPlayingMoviesResponse is null ");
