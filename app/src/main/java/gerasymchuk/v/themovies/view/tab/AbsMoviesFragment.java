@@ -1,11 +1,10 @@
 package gerasymchuk.v.themovies.view.tab;
 
+import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import java.util.List;
 
 import gerasymchuk.v.themovies.R;
 import gerasymchuk.v.themovies.data.model.Movie;
@@ -70,10 +69,10 @@ public abstract class AbsMoviesFragment extends AbsFragment {
      *
      * @param movieList List of {@link Movie}
      */
-    protected void refreshRecyclerView(@NonNull List<Movie> movieList) {
+    protected void refreshRecyclerView(@NonNull PagedList<Movie> movieList) {
         log("refreshRecyclerView :: start");
         if (adapter != null) {
-            adapter.refresh(movieList);
+            adapter.setList(movieList);
             log("refreshRecyclerView :: done");
         } else log("refreshRecyclerView :: adapter null");
     }
