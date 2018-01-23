@@ -151,6 +151,24 @@ public class Movie {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Movie movie = (Movie) o;
+
+        if (id != movie.id) return false;
+        return type.equals(movie.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type.hashCode();
+        result = 31 * result + id;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Movie{" +
                 "voteCount=" + voteCount +
