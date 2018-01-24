@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import gerasymchuk.v.themovies.R;
 import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.shared.Logger;
@@ -38,13 +36,14 @@ public class MoviesListAdapter extends PagedListAdapter<Movie, MoviesListAdapter
     MoviesListAdapter(@NonNull Callback callback) {
         super(DIFF_CALLBACK);
         this.callback = callback;
+        log("[MOVIES_ADAPTER] :: created");
     }
 
     @Override
     public MovieItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MovieItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false), adapterPosition -> {
+        return new MovieItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false), movie -> {
             if (callback != null) {
-                Movie movie = getItem(adapterPosition);
+                log("[MOVIES_ADAPTER] :: movie %s clicked", movie);
                 if (movie != null) {
                     callback.onMovieClicked(movie);
                 }
@@ -55,15 +54,9 @@ public class MoviesListAdapter extends PagedListAdapter<Movie, MoviesListAdapter
     @Override
     public void onBindViewHolder(MovieItemHolder holder, int position) {
         final Movie movie = getItem(position);
-        Logger.d(TAG, "onBindViewHolder :: position " + position + " item " + movie);
         if (movie != null) {
             holder.bind(movie);
         }
-    }
-
-    @Override
-    public void onBindViewHolder(MovieItemHolder holder, int position, List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
     }
 
     private static final DiffCallback<Movie> DIFF_CALLBACK = new DiffCallback<Movie>() {
@@ -88,27 +81,34 @@ public class MoviesListAdapter extends PagedListAdapter<Movie, MoviesListAdapter
     static class MovieItemHolder extends RecyclerView.ViewHolder {
 
         interface OnMovieClickedCallback {
-            void onAdapterPosition(int adapterPosition);
+            void onMovie(@Nullable Movie movie);
         }
 
         TextView tv;
 
+        @Nullable
+        private Movie movie;
+
         MovieItemHolder(View itemView, @NonNull OnMovieClickedCallback callback) {
             super(itemView);
+            log("[MOVIES_ADAPTER] :: MovieItemHolder -> created");
             tv = itemView.findViewById(R.id.tv);
             itemView.findViewById(R.id.card_view)
-                    .setOnClickListener(view -> callback.onAdapterPosition(getAdapterPosition()));
+                    .setOnClickListener(view -> callback.onMovie(movie));
         }
 
-        void bind(@NonNull Movie movie) {
-            tv.setText(movie.getOriginalTitle());
+        void bind(@Nullable Movie movie) {
+            this.movie = movie;
+            if (movie != null) {
+                tv.setText(movie.getOriginalTitle());
+            }
         }
     }
 
     /**
      * Log
      */
-    private void log(String msg, Object... args) {
+    private static void log(String msg, Object... args) {
         if (DEBUG) {
             Logger.d(TAG, msg, args);
         }
