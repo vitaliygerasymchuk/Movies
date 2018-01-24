@@ -18,6 +18,8 @@ public interface MoviesContract {
 
         void checkMovies(@Nullable PagedList<Movie> movies);
 
+        void onMovieClicked(@NonNull Movie movie);
+
         void getMoreMovies();
     }
 
