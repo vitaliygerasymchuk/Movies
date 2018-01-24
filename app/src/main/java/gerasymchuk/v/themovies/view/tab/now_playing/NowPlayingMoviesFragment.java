@@ -5,6 +5,7 @@ import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.shared.Logger;
@@ -72,6 +73,14 @@ public class NowPlayingMoviesFragment
     public void renderMovies(@NonNull PagedList<Movie> movieList) {
         log("renderMovies");
         refreshRecyclerView(movieList);
+    }
+
+    @Override
+    public void onMovieClicked(@NonNull Movie movie) {
+        Toast.makeText(getContext(), movie.getOriginalTitle(), Toast.LENGTH_SHORT).show();
+        if (presenter != null) {
+            presenter.onMovieClicked(movie);
+        }
     }
 
     private void initViewModel() {
