@@ -11,6 +11,5 @@ import gerasymchuk.v.themovies.data.RoomDB;
  */
 
 public abstract class AbsViewModel extends ViewModel {
-
     protected RoomDB db = App.getInstance().getDB();
 }
