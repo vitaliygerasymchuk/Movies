@@ -23,6 +23,9 @@ public class LoginInteractor
     @SuppressWarnings("unused")
     private static final String TAG = LoginInteractor.class.getSimpleName();
 
+    @SuppressWarnings("unused")
+    public static final boolean DEBUG = true;
+
     @NonNull
     private String requestToken = "";
 
@@ -80,10 +83,14 @@ public class LoginInteractor
     }
 
     private void log(@NonNull String msg, @NonNull Object... args) {
-        Logger.d(TAG, "[LOGIN] " + msg, args);
+        if (DEBUG) {
+            Logger.d(TAG, "[LOGIN] " + msg, args);
+        }
     }
 
     private void logE(@NonNull String msg) {
-        Logger.e(TAG, "[LOGIN] " + msg);
+        if (DEBUG) {
+            Logger.e(TAG, "[LOGIN] " + msg);
+        }
     }
 }
