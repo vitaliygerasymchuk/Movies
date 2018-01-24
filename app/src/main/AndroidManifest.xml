@@ -30,6 +30,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".view.settings.SettingsActivity" />
         <activity android:name=".view.account.AccountActivity" />
+        <activity android:name=".view.movie_details.MovieDetailsActivity" />
 
     </application>
 
