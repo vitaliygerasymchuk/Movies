@@ -16,8 +16,6 @@ public interface MoviesContract {
     interface Presenter extends BasePresenter {
         void onVisibilityChanged(boolean isVisible);
 
-        void checkMovies(@Nullable PagedList<Movie> movies);
-
         void onMovieClicked(@NonNull Movie movie);
 
         void getMoreMovies();
@@ -25,5 +23,7 @@ public interface MoviesContract {
 
     interface View {
         void renderMovies(@NonNull PagedList<Movie> movieList);
+
+        void launchMovieDetails(@NonNull Movie movie);
     }
 }
