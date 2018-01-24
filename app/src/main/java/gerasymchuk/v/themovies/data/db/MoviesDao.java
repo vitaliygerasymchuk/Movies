@@ -26,6 +26,6 @@ public interface MoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovies(@NonNull List<Movie> movies);
 
-    @Query("SELECT * FROM " + TABLE_MOVIES + " WHERE type like :type ORDER BY voteCount ASC")
+    @Query("SELECT * FROM " + TABLE_MOVIES + " WHERE type like :type ORDER BY voteCount DESC, id ASC")
     DataSource.Factory<Integer, Movie> getMoviesForType(@NonNull String type);
 }
