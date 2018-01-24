@@ -1,6 +1,5 @@
 package gerasymchuk.v.themovies.view.tab.now_playing.presenter;
 
-import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -57,12 +56,8 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
     }
 
     @Override
-    public void checkMovies(@Nullable PagedList<Movie> movies) {
-        if (movies != null) {
-            log("checkMovies :: list is ok, size %s ", movies.getLastKey());
-            if (view == null) return;
-            view.renderMovies(movies);
-        } else log("checkMovies :: PagedList of movies is null");
+    public void onMovieClicked(@NonNull Movie movie) {
+
     }
 
     @Override
@@ -90,12 +85,12 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
         }, new OnError<String>() {
             @Override
             public void onError(String s) {
-
+                //
             }
         }, new OnError<Integer>() {
             @Override
             public void onError(Integer integer) {
-
+                //
             }
         });
     }
