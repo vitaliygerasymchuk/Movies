@@ -4,10 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import gerasymchuk.v.themovies.App;
-import gerasymchuk.v.themovies.data.RoomDB;
 import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.enums.MovieType;
 
@@ -16,16 +13,10 @@ import gerasymchuk.v.themovies.enums.MovieType;
  */
 
 public class MoviesViewModel extends AbsViewModel {
-
-    @NonNull
-    private RoomDB db;
-
     @NonNull
     public final LiveData<PagedList<Movie>> moviesList;
 
     public MoviesViewModel() {
-        db = App.getInstance().getDB();
-
         final PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(false)
                 .setPrefetchDistance(5)
