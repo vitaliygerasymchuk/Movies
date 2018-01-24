@@ -10,6 +10,7 @@ import gerasymchuk.v.themovies.R;
 import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.view.AbsFragment;
+import gerasymchuk.v.themovies.view.SimpleDividerItemDecoration;
 
 /**
  * Created by vitaliygerasymchuk on 1/12/18
@@ -56,9 +57,16 @@ public abstract class AbsMoviesFragment extends AbsFragment {
     private void setupRecyclerView() {
         log("setupRecyclerView :: start");
         if (getContext() != null) {
-            RecyclerView recyclerView = find(R.id.recycler_view);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             adapter = new MoviesListAdapter();
+
+            final RecyclerView recyclerView = find(R.id.recycler_view);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            final SimpleDividerItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getResources().getDimensionPixelSize(R.dimen.movie_item_divider), false);
+
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(dividerItemDecoration);
+
+
             recyclerView.setAdapter(adapter);
             log("setupRecyclerView :: done");
         } else log("setupRecyclerView :: context null");
