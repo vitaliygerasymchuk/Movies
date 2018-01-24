@@ -2,6 +2,8 @@ package gerasymchuk.v.themovies.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -22,7 +24,7 @@ import static gerasymchuk.v.themovies.shared.Validator.validString;
 @Entity(tableName = TABLE_MOVIES,
         indices = {@Index(value = {"id", "type"})},
         primaryKeys = {"id", "type"})
-public class Movie {
+public class Movie implements Parcelable {
 
     @NonNull
     public String type = MovieType.Na.name();
@@ -203,6 +205,64 @@ public class Movie {
         result = 31 * result + genreIds.hashCode();
         return result;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.type);
+        dest.writeInt(this.voteCount);
+        dest.writeInt(this.id);
+        dest.writeByte(this.video ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
+        dest.writeDouble(this.voteAverage);
+        dest.writeDouble(this.popularity);
+        dest.writeString(this.title);
+        dest.writeString(this.posterPath);
+        dest.writeString(this.originalLanguage);
+        dest.writeString(this.originalTitle);
+        dest.writeString(this.backdropPath);
+        dest.writeString(this.overview);
+        dest.writeString(this.releaseDate);
+        dest.writeList(this.genreIds);
+    }
+
+    public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        this.type = in.readString();
+        this.voteCount = in.readInt();
+        this.id = in.readInt();
+        this.video = in.readByte() != 0;
+        this.adult = in.readByte() != 0;
+        this.voteAverage = in.readDouble();
+        this.popularity = in.readDouble();
+        this.title = in.readString();
+        this.posterPath = in.readString();
+        this.originalLanguage = in.readString();
+        this.originalTitle = in.readString();
+        this.backdropPath = in.readString();
+        this.overview = in.readString();
+        this.releaseDate = in.readString();
+        this.genreIds = new ArrayList<Integer>();
+        in.readList(this.genreIds, Integer.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     @Override
     public String toString() {
