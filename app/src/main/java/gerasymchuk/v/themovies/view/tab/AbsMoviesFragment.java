@@ -1,6 +1,8 @@
 package gerasymchuk.v.themovies.view.tab;
 
 import android.arch.paging.PagedList;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +12,15 @@ import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.view.AbsFragment;
 import gerasymchuk.v.themovies.view.SimpleDividerItemDecoration;
+import gerasymchuk.v.themovies.view.movie_details.MovieDetailsActivity;
 
 /**
  * Created by vitaliygerasymchuk on 1/12/18
  */
 
-public abstract class AbsMoviesFragment extends AbsFragment implements MoviesListAdapter.Callback {
+public abstract class AbsMoviesFragment
+        extends AbsFragment
+        implements MoviesListAdapter.Callback {
 
     @SuppressWarnings("unused")
     private static final boolean DEBUG = true;
@@ -41,6 +46,14 @@ public abstract class AbsMoviesFragment extends AbsFragment implements MoviesLis
     protected abstract void onFragmentVisible();
 
     protected abstract void onFragmentInvisible();
+
+    protected void launchMovieDetails(@NonNull Movie movie) {
+        final Context ctx = getContext();
+        if (ctx != null) {
+            MovieDetailsActivity.launch(getContext(), movie);
+        } else log("launchMovieDetails :: Context == null");
+    }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
