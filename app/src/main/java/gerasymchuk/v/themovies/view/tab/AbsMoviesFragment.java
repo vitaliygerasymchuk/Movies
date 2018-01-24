@@ -16,7 +16,7 @@ import gerasymchuk.v.themovies.view.SimpleDividerItemDecoration;
  * Created by vitaliygerasymchuk on 1/12/18
  */
 
-public abstract class AbsMoviesFragment extends AbsFragment {
+public abstract class AbsMoviesFragment extends AbsFragment implements MoviesListAdapter.Callback {
 
     @SuppressWarnings("unused")
     private static final boolean DEBUG = true;
@@ -57,7 +57,7 @@ public abstract class AbsMoviesFragment extends AbsFragment {
     private void setupRecyclerView() {
         log("setupRecyclerView :: start");
         if (getContext() != null) {
-            adapter = new MoviesListAdapter();
+            adapter = new MoviesListAdapter(this);
 
             final RecyclerView recyclerView = find(R.id.recycler_view);
             final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -77,7 +77,7 @@ public abstract class AbsMoviesFragment extends AbsFragment {
      *
      * @param movieList List of {@link Movie}
      */
-    protected void refreshRecyclerView(@NonNull PagedList<Movie> movieList) {
+    protected void refreshRecyclerView(@Nullable PagedList<Movie> movieList) {
         log("refreshRecyclerView :: start");
         if (adapter != null) {
             adapter.setList(movieList);
