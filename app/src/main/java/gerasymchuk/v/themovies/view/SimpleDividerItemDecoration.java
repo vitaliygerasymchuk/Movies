@@ -28,7 +28,7 @@ public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
         int left = 0, right = 0, top = 0, bottom = 0, size;
         int childCount = parent.getChildCount();
         // skip first item in the list
-        if (parent.getChildAdapterPosition(view) != 0) {
+        if (parent.getChildAdapterPosition(view) >= 0) {
             if (verticalOrientation) {
                 outRect.set(space, 0, 0, 0);
             } else {
