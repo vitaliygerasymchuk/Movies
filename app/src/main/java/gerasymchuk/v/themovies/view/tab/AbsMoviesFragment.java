@@ -45,15 +45,25 @@ public abstract class AbsMoviesFragment
 
     protected abstract void onFragmentVisible();
 
+
     protected abstract void onFragmentInvisible();
 
+    @Override
+    public void onMovieClicked(@NonNull Movie movie) {
+        launchMovieDetails(movie);
+    }
+
+    /**
+     * Launches {@link MovieDetailsActivity} screen for provided {@link Movie}
+     *
+     * @param movie Movie object
+     */
     protected void launchMovieDetails(@NonNull Movie movie) {
         final Context ctx = getContext();
         if (ctx != null) {
             MovieDetailsActivity.launch(getContext(), movie);
         } else log("launchMovieDetails :: Context == null");
     }
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -78,7 +88,6 @@ public abstract class AbsMoviesFragment
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(dividerItemDecoration);
 
-
             recyclerView.setAdapter(adapter);
             log("setupRecyclerView :: done");
         } else log("setupRecyclerView :: context null");
@@ -97,6 +106,9 @@ public abstract class AbsMoviesFragment
         } else log("refreshRecyclerView :: adapter null");
     }
 
+    /**
+     * Log
+     */
     private void log(String msg, Object... args) {
         if (DEBUG) {
             Logger.d(TAG, msg, args);
