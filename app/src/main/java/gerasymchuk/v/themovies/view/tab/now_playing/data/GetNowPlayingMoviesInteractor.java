@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import gerasymchuk.v.themovies.App;
 import gerasymchuk.v.themovies.data.RoomDB;
 import gerasymchuk.v.themovies.data.model.response.NowPlayingMoviesResponse;
-import gerasymchuk.v.themovies.enums.MovieType;
 import gerasymchuk.v.themovies.network.AbsInteractor;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.shared.callback.OnError;
@@ -68,9 +67,9 @@ public class GetNowPlayingMoviesInteractor
                     .getNowPlayingMovies(getLanguage(), getPage(), getRegion())
                     .execute();
 
-            log("getMoviesForType :: received response %s", +response.code());
-
             final NowPlayingMoviesResponse responseBody = response.body();
+
+            log("getMoviesForType :: received response %s, body -> %s ", +response.code(), responseBody);
 
             if (responseBody != null) {
                 db.moviesDao().insertMovies(responseBody.movies);
