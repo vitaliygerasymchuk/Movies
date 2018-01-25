@@ -6,7 +6,8 @@
     android:layout_marginEnd="@dimen/movie_item_left_right_margin"
     android:layout_marginStart="@dimen/movie_item_left_right_margin"
     android:background="@android:color/white"
-    android:elevation="@dimen/movie_item_elevation">
+    android:elevation="@dimen/movie_item_elevation"
+    android:foreground="?attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/tv"

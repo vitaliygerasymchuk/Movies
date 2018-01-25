@@ -23,16 +23,12 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
     @Nullable
     private MoviesContract.View view;
 
-    @Nullable
-    private GetNowPlayingMoviesUseCase nowPlayingMoviesUseCase;
-
     private int currentPage = 1;
 
     private int totalPages = -1;
 
     public NowPlayingMoviesPresenter(@NonNull MoviesContract.View view) {
         this.view = view;
-        this.initNowPlayingMoviesUseCase();
         log("constructor");
     }
 
@@ -56,37 +52,14 @@ public class NowPlayingMoviesPresenter implements MoviesContract.Presenter {
 
     @Override
     public void getMoreMovies() {
-        if (currentPage != totalPages) {
-            if (nowPlayingMoviesUseCase != null) {
-                log("getMoreMovies :: start, currentPage %s ", currentPage);
-                nowPlayingMoviesUseCase.getNowPlayingMovies(null, null, currentPage);
-            } else log("getMoreMovies :: GetNowPlayingMoviesUseCase is null");
-        } else {
-            log("getMoreMovies :: no need to download, last page is %s ", currentPage);
-        }
-    }
-
-    private void initNowPlayingMoviesUseCase() {
-        nowPlayingMoviesUseCase = new GetNowPlayingMoviesInteractor(nowPlayingMoviesResponse -> {
-            if (view == null) return;
-            totalPages = nowPlayingMoviesResponse.totalPages;
-
-            if (currentPage != totalPages) {
-                currentPage++;
-                log("getMoreMovies :: done, nextPage %s ", currentPage);
-            } else log("getMoreMovies :: done, all pages downloaded");
-
-        }, new OnError<String>() {
-            @Override
-            public void onError(String s) {
-                //
-            }
-        }, new OnError<Integer>() {
-            @Override
-            public void onError(Integer integer) {
-                //
-            }
-        });
+//        if (currentPage != totalPages) {
+//            if (nowPlayingMoviesUseCase != null) {
+//                log("getMoreMovies :: start, currentPage %s ", currentPage);
+//                nowPlayingMoviesUseCase.getNowPlayingMovies(null, null, currentPage);
+//            } else log("getMoreMovies :: GetNowPlayingMoviesUseCase is null");
+//        } else {
+//            log("getMoreMovies :: no need to download, last page is %s ", currentPage);
+//        }
     }
 
     private void log(@NonNull String msg, Object... args) {
