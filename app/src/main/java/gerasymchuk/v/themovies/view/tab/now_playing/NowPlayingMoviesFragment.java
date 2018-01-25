@@ -79,13 +79,6 @@ public class NowPlayingMoviesFragment
         super.launchMovieDetails(movie);
     }
 
-    @Override
-    public void onMovieClicked(@NonNull Movie movie) {
-        if (presenter != null) {
-            presenter.onMovieClicked(movie);
-        }
-    }
-
     private void initViewModel() {
         log("initViewModel :: start");
         final MoviesViewModel viewModel = ViewModelProviders.of(this)
