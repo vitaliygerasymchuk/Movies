@@ -21,12 +21,12 @@ import static gerasymchuk.v.themovies.shared.Const.DEFAULT_REGION;
  * Created by vitaliygerasymchuk on 1/12/18
  */
 
-public class GetNowPlayingMoviesInteractor
+public class GetNowPlayingInteractor
         extends AbsInteractor<NowPlayingMoviesResponse>
         implements GetNowPlayingMoviesUseCase {
 
     @SuppressWarnings("unused")
-    private static final String TAG = "GetNowPlayingMoviesInteractor";
+    private static final String TAG = "GetNowPlayingInteractor";
 
     @NonNull
     private RoomDB db;
@@ -39,9 +39,9 @@ public class GetNowPlayingMoviesInteractor
 
     private int page = -1;
 
-    public GetNowPlayingMoviesInteractor(@Nullable OnSuccess<NowPlayingMoviesResponse> onSuccess,
-                                         @Nullable OnError<String> errorString,
-                                         @Nullable OnError<Integer> errorInt) {
+    GetNowPlayingInteractor(@Nullable OnSuccess<NowPlayingMoviesResponse> onSuccess,
+                            @Nullable OnError<String> errorString,
+                            @Nullable OnError<Integer> errorInt) {
         super(onSuccess, errorString, errorInt);
         db = App.getInstance().getDB();
     }
