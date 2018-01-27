@@ -1,6 +1,5 @@
 package gerasymchuk.v.themovies.shared;
 
-
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -42,13 +41,25 @@ public class Logger {
 
     public static void d(@NonNull String tag, String text, Object... args) {
         if (DEBUG) {
-            Log.d(tag, "[ " + Thread.currentThread().getId() + " ] " + String.format(text, args));
+            final String threadId = "[" + String.valueOf(Thread.currentThread().getId()) + "]";
+            String msg;
+            try {
+                msg = rightPadding(threadId, 10 - threadId.length(), ' ') + String.format(text, args);
+            } catch (Exception e) {
+                msg = threadId + " " + String.format(text, args);
+            }
+            Log.d(rightPadding(tag, 33, '.'), msg);
         }
     }
 
     public static void i(@NonNull String tag, String text, Object... args) {
         if (DEBUG) {
-            Log.i(tag, "[ " + Thread.currentThread().getId() + " ] " + String.format(text, args));
+            final String threadId = String.valueOf(Thread.currentThread().getId());
+            Log.i(tag, "[ " + threadId + " ]  " + String.format(text, args));
         }
+    }
+
+    public static String rightPadding(String str, int num, char symb) {
+        return String.format("%1$-" + num + "s", str).replace(' ', symb);
     }
 }
