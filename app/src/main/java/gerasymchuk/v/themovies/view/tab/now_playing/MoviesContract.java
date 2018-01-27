@@ -15,8 +15,6 @@ public interface MoviesContract {
 
     interface Presenter extends BasePresenter {
         void onVisibilityChanged(boolean isVisible);
-
-        void getMoreMovies();
     }
 
     interface View {
