@@ -14,10 +14,10 @@ import gerasymchuk.v.themovies.shared.Logger;
  * Created by vitaliygerasymchuk on 1/25/18
  */
 
-public class NowPlayingMoviesDataSource extends PageKeyedDataSource<Integer, Movie> {
+public class NowPlayingMoviesDS extends PageKeyedDataSource<Integer, Movie> {
 
     @SuppressWarnings("unused")
-    private static final String TAG = "NowPlayingMoviesDataSource";
+    private static final String TAG = "NowPlayingMoviesDS";
 
     private static final boolean DEBUG = true;
 
@@ -37,30 +37,30 @@ public class NowPlayingMoviesDataSource extends PageKeyedDataSource<Integer, Mov
 
     private boolean canLoadMore = true;
 
-    NowPlayingMoviesDataSource() {
+    NowPlayingMoviesDS() {
         dataState = new MutableLiveData<>();
-        nowPlayingMoviesUseCase = new GetNowPlayingMoviesInteractor(nowPlayingMoviesResponse -> {
+        nowPlayingMoviesUseCase = new GetNowPlayingInteractor(nowPlayingMoviesResponse -> {
             dataState.postValue(new DataState(EDataState.Loaded, -1, ""));
             final int totalPages = nowPlayingMoviesResponse.totalPages;
-            final int currentPage = nowPlayingMoviesResponse.page;
-            log("[MOVIES_NOW_PLAYING] :: totalPages  %s", totalPages);
-            log("[MOVIES_NOW_PLAYING] :: currentPage %s", currentPage);
-            canLoadMore = this.currentPage <= totalPages;
-            if (currentPage == 1) {
+            final int downloadedPage = nowPlayingMoviesResponse.page;
+            log("totalPages  %s", totalPages);
+            log("downloadedPage %s", downloadedPage);
+            canLoadMore = this.currentPage < totalPages - 1;
+            if (downloadedPage == 1) {
                 if (loadInitialCallback != null) {
-                    loadInitialCallback.onResult(nowPlayingMoviesResponse.movies, currentPage, totalPages);
+                    loadInitialCallback.onResult(nowPlayingMoviesResponse.movies, downloadedPage, totalPages);
                 }
             } else {
                 if (loadAfterCallback != null) {
-                    loadAfterCallback.onResult(nowPlayingMoviesResponse.movies, canLoadMore ? (currentPage + 1) : null);
+                    loadAfterCallback.onResult(nowPlayingMoviesResponse.movies, canLoadMore ? (downloadedPage + 1) : null);
                 }
             }
         }, s -> {
             dataState.postValue(new DataState(EDataState.Error, -1, s));
-            log("[MOVIES_NOW_PLAYING] :: onError %s", s);
+            log("onError %s", s);
         }, integer -> {
             dataState.postValue(new DataState(EDataState.Error, integer, ""));
-            log("[MOVIES_NOW_PLAYING] :: onError");
+            log("onError");
         });
     }
 
@@ -82,23 +82,36 @@ public class NowPlayingMoviesDataSource extends PageKeyedDataSource<Integer, Mov
         if (canLoadMore) {
             getMovies(currentPage += 1);
         } else
-            log("[MOVIES_NOW_PLAYING] :: cannot load more items, page %s", currentPage);
+            log("cannot load more items, page %s", currentPage);
     }
 
+    /**
+     * Returns {@link DataState} which represents current state of datat
+     *
+     * @return DataState
+     */
     @NonNull
     public MutableLiveData<DataState> getDataState() {
         return dataState;
     }
 
+    /**
+     * Invokes interactor to get more data
+     *
+     * @param page page to load
+     */
     private void getMovies(int page) {
-        log("[MOVIES_NOW_PLAYING] :: start loading page %s", currentPage);
+        log("start loading page %s", currentPage);
         dataState.postValue(new DataState(EDataState.Loading, -1, ""));
         nowPlayingMoviesUseCase.getNowPlayingMovies("", "", page);
     }
 
+    /**
+     * Log
+     */
     private void log(String msg, Object... args) {
         if (DEBUG) {
-            Logger.d(TAG, String.format(msg, args));
+            Logger.d(TAG,"[MOVIES_NOW_PLAYING] " +  msg, args);
         }
     }
 }
