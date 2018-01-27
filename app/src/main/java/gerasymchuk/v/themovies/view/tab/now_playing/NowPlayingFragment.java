@@ -10,13 +10,13 @@ import gerasymchuk.v.themovies.data.model.Movie;
 import gerasymchuk.v.themovies.shared.Logger;
 import gerasymchuk.v.themovies.view.BasePresenter;
 import gerasymchuk.v.themovies.view.tab.AbsMoviesFragment;
-import gerasymchuk.v.themovies.view.tab.now_playing.presenter.NowPlayingMoviesPresenter;
+import gerasymchuk.v.themovies.view.tab.now_playing.presenter.NowPlayingPresenter;
 import gerasymchuk.v.themovies.view_model.MoviesViewModel;
 
 /**
  * Created by vitaliygerasymchuk on 1/12/18
  */
-public class NowPlayingMoviesFragment
+public class NowPlayingFragment
         extends AbsMoviesFragment
         implements MoviesContract.View {
 
@@ -24,13 +24,13 @@ public class NowPlayingMoviesFragment
     private static final boolean DEBUG = true;
 
     @SuppressWarnings("unused")
-    private static final String TAG = "NowPlayingMoviesFragment";
+    private static final String TAG = "NowPlayingFragment";
 
-    public static NowPlayingMoviesFragment newInstance() {
+    public static NowPlayingFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        NowPlayingMoviesFragment fragment = new NowPlayingMoviesFragment();
+        NowPlayingFragment fragment = new NowPlayingFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,7 +47,7 @@ public class NowPlayingMoviesFragment
 
     @Override
     protected BasePresenter bindPresenter() {
-        presenter = new NowPlayingMoviesPresenter(this);
+        presenter = new NowPlayingPresenter(this);
         log("bindPresenter");
         return presenter;
     }
