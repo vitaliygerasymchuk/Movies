@@ -9,9 +9,8 @@ import android.support.annotation.NonNull;
 
 import gerasymchuk.v.themovies.data.model.DataState;
 import gerasymchuk.v.themovies.data.model.Movie;
-import gerasymchuk.v.themovies.enums.MovieType;
-import gerasymchuk.v.themovies.view.tab.now_playing.data.NowPlayingMoviesDataSource;
-import gerasymchuk.v.themovies.view.tab.now_playing.data.NowPlayingMoviesDataSourceFactory;
+import gerasymchuk.v.themovies.view.tab.now_playing.data.NowPlayingMoviesDS;
+import gerasymchuk.v.themovies.view.tab.now_playing.data.NowPlayingDsFactory;
 
 /**
  * Created by vitaliygerasymchuk on 1/12/18
@@ -23,16 +22,16 @@ public class MoviesViewModel extends AbsViewModel {
     public final LiveData<PagedList<Movie>> moviesList;
 
     @NonNull
-    private MutableLiveData<NowPlayingMoviesDataSource> apiMoviesDataSource;
+    private MutableLiveData<NowPlayingMoviesDS> apiMoviesDataSource;
 
     @NonNull
     private LiveData<DataState> dataStateLiveData;
 
     public MoviesViewModel() {
 
-        final NowPlayingMoviesDataSourceFactory factory = new NowPlayingMoviesDataSourceFactory();
+        final NowPlayingDsFactory factory = new NowPlayingDsFactory();
         apiMoviesDataSource = factory.getLiveData();
-        dataStateLiveData = Transformations.switchMap(factory.getLiveData(), NowPlayingMoviesDataSource::getDataState);
+        dataStateLiveData = Transformations.switchMap(factory.getLiveData(), NowPlayingMoviesDS::getDataState);
 
         final PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(false)
