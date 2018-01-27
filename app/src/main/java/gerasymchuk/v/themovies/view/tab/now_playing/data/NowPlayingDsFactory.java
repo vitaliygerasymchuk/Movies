@@ -11,21 +11,21 @@ import gerasymchuk.v.themovies.shared.Logger;
  * Created by vitaliygerasymchuk on 1/25/18
  */
 
-public class NowPlayingMoviesDataSourceFactory implements DataSource.Factory<Integer, Movie> {
+public class NowPlayingDsFactory implements DataSource.Factory<Integer, Movie> {
 
     @SuppressWarnings("unused")
-    private static final String TAG = "NowPlayingMoviesDataSourceFactory";
+    private static final String TAG = "NowPlayingDsFactory";
 
     @SuppressWarnings("unused")
     private static final boolean DEBUG = true;
 
     @NonNull
-    private MutableLiveData<NowPlayingMoviesDataSource> liveData;
+    private MutableLiveData<NowPlayingMoviesDS> liveData;
 
     @NonNull
-    private NowPlayingMoviesDataSource dataSource;
+    private NowPlayingMoviesDS dataSource;
 
-    public NowPlayingMoviesDataSourceFactory() {
+    public NowPlayingDsFactory() {
         log("factory constructed");
         this.liveData = new MutableLiveData<>();
     }
@@ -33,13 +33,13 @@ public class NowPlayingMoviesDataSourceFactory implements DataSource.Factory<Int
     @Override
     public DataSource<Integer, Movie> create() {
         log("factory create called");
-        dataSource = new NowPlayingMoviesDataSource();
+        dataSource = new NowPlayingMoviesDS();
         liveData.postValue(dataSource);
         return dataSource;
     }
 
     @NonNull
-    public MutableLiveData<NowPlayingMoviesDataSource> getLiveData() {
+    public MutableLiveData<NowPlayingMoviesDS> getLiveData() {
         return liveData;
     }
 
